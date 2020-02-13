@@ -113,6 +113,10 @@ void NSECBitmap::fromPacket(PacketReader& pr)
     unsigned int window=static_cast<unsigned char>(bitmap[n++]);
     unsigned int blen=static_cast<unsigned char>(bitmap[n++]);
 
+    if(blen > 32) {
+       throw MOADNSException("NSEC block too long");
+    }
+
     // end if zero padding and ensure packet length
     if(window == 0 && blen == 0) {
       break;
